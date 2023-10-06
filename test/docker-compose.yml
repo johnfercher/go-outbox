@@ -1,0 +1,26 @@
+version: '3'
+
+networks:
+  transactional:
+    driver: bridge
+
+
+services:
+  outbox-test-db:
+    image: outbox-test-db
+    container_name: outbox-test-db
+    expose:
+      - '3306'
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: supersecret
+      MYSQL_DATABASE: OutboxTestDb
+      MYSQL_USER: AdminUser
+      MYSQL_PASSWORD: AdminPassword
+    volumes:
+      - ./outboxtestdb/data:/var/lib/mysql
+    healthcheck:
+      test: "exit 0"
+    networks:
+      - transactional
