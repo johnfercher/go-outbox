@@ -1,4 +1,12 @@
+CREATE DATABASE OutboxTestDb;
+
 USE OutboxTestDb;
+
+CREATE USER 'AdminUser'@'%' IDENTIFIED BY 'AdminPassword';
+GRANT ALL PRIVILEGES ON *.* TO 'AdminUser'@'%' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+
+SHOW GRANTS FOR 'AdminUser'@'%';
 
 CREATE TABLE IF NOT EXISTS any_tables(
     `id` varchar(36) NOT NULL,
@@ -30,3 +38,6 @@ INSERT INTO any_tables(id, any_data) VALUES ('c58b4e85-600b-4171-91ff-80af251dde
 INSERT INTO outboxes(id, table_id, table_name, status) VALUES ('bbbbbbbb-600b-4171-91ff-80af251ddea0', 'c58b4e85-600b-4171-91ff-80af251ddea0', 'any_tables', 'created');
 INSERT INTO outboxes(id, table_id, table_name, status) VALUES ('bbbbbbbb-600b-4171-91ff-80af251ddea1', 'c58b4e85-600b-4171-91ff-80af251ddea1', 'any_tables', 'created');
 INSERT INTO outboxes(id, table_id, table_name, status) VALUES ('bbbbbbbb-600b-4171-91ff-80af251ddea2', 'c58b4e85-600b-4171-91ff-80af251ddea2', 'any_tables', 'created');
+
+SET GLOBAL binlog_format='ROW';
+SET SESSION binlog_format='ROW';

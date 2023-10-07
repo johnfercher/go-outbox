@@ -1,0 +1,5 @@
+mysql:
+  url: "outbox-test-db:3306"
+  db: "OutboxTestDb"
+  user: "AdminUser"
+  password: "AdminPassword"

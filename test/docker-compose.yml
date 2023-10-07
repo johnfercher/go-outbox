@@ -15,9 +15,6 @@ services:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: supersecret
-      MYSQL_DATABASE: OutboxTestDb
-      MYSQL_USER: AdminUser
-      MYSQL_PASSWORD: AdminPassword
     volumes:
       - ./outboxtestdb/data:/var/lib/mysql
     healthcheck:
