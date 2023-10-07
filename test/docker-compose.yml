@@ -24,3 +24,16 @@ services:
       test: "exit 0"
     networks:
       - transactional
+
+  outbox-test-api:
+    image: outbox-test-api
+    container_name: outbox-test-api
+    expose:
+      - '3000'
+    ports:
+      - "3000:3000"
+    depends_on:
+      outbox-test-db:
+        condition: service_healthy
+    networks:
+      - transactional
