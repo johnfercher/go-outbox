@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/go-mysql-org/go-mysql/canal"
 	"github.com/johnfercher/go-outbox/internal/binlogparser"
 	"github.com/johnfercher/go-outbox/internal/config"
@@ -42,5 +43,23 @@ type binlogHandler struct {
 	binlogparser.BinlogParser // Our custom helper
 }
 
-func (h *binlogHandler) OnRow(e *canal.RowsEvent) error { return nil }
-func (h *binlogHandler) String() string                 { return "binlogHandler" }
+func (h *binlogHandler) OnRow(e *canal.RowsEvent) error {
+	var n int //starting value
+	var k int // step
+	switch e.Action {
+	case canal.DeleteAction:
+		return nil // not covered in example
+	case canal.UpdateAction:
+		n = 1
+		k = 2
+	case canal.InsertAction:
+		n = 0
+		k = 1
+	}
+	for i := n; i < len(e.Rows); i += k {
+		key := e.Table.Schema + "." + e.Table.Name
+		fmt.Println(key)
+	}
+	return nil
+}
+func (h *binlogHandler) String() string { return "binlogHandler" }
